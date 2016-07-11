@@ -1,0 +1,27 @@
+## Will need to change the build paths if on a different machine ##
+databasemaster:
+    build: .
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=Codiscope
+      - REPLICATION_MASTER=true
+      - REPLICATION_USER=csa-slave
+      - REPLICATION_PASS=codiscope
+databaseslave:
+    build: /home/ryan/Docker/Enterprise_Portalv.3.00/mysql-slave/
+    ports: 
+      - "3307:3307"
+    links:
+     - databasemaster
+    environment:
+      - MYSQL_ROOT_PASSWORD=Codiscope
+      - REPLICATION_SLAVE=true
+tomcat:
+    links:
+      - databasemaster
+      - databaseslave
+    build: /home/ryan/Docker/Enterprise_Portalv.3.00/tomcat
+    command: /usr/local/tomcat/apache-tomcat-7.0.67/bin/catalina.sh run
+    ports:
+      - "8080:8080"
