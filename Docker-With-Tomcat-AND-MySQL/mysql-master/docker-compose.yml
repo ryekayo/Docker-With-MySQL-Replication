@@ -4,24 +4,24 @@ databasemaster:
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=Codiscope
+      - MYSQL_ROOT_PASSWORD=TestPassword1
       - REPLICATION_MASTER=true
-      - REPLICATION_USER=csa-slave
-      - REPLICATION_PASS=codiscope
+      - REPLICATION_USER=mysql-slave
+      - REPLICATION_PASS=slaveone
 databaseslave:
-    build: /home/ryan/Docker/Enterprise_Portalv.3.00/mysql-slave/
+    build: /Path/to/mysql-slave/
     ports: 
       - "3307:3307"
     links:
      - databasemaster
     environment:
-      - MYSQL_ROOT_PASSWORD=Codiscope
+      - MYSQL_ROOT_PASSWORD=TestPassword1
       - REPLICATION_SLAVE=true
 tomcat:
     links:
       - databasemaster
       - databaseslave
-    build: /home/ryan/Docker/Enterprise_Portalv.3.00/tomcat
+    build: /Path/to/tomcat
     command: /usr/local/tomcat/apache-tomcat-7.0.67/bin/catalina.sh run
     ports:
       - "8080:8080"
