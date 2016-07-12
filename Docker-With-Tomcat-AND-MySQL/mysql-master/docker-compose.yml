@@ -22,6 +22,6 @@ tomcat:
       - databasemaster
       - databaseslave
     build: /Path/to/tomcat
-    command: /usr/local/tomcat/apache-tomcat-7.0.67/bin/catalina.sh run
+    command: /usr/local/tomcat/bin/catalina.sh run
     ports:
       - "8080:8080"
